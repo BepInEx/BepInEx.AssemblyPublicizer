@@ -1,0 +1,8 @@
+<Project>
+    <PropertyGroup>
+        <Authors>BepInEx</Authors>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/BepInEx/BepInEx.AssemblyPublicizer</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+    </PropertyGroup>
+</Project>

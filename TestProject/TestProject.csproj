@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <Import Project="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.props" />
+
+    <PropertyGroup>
+        <TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.AssemblyPublicizer.MSBuild\bin\Debug\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll</TaskAssembly>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.csproj" ReferenceOutputAssembly="false" />
+        <Compile Include="..\BepInEx.AssemblyPublicizer.MSBuild\IgnoresAccessChecksToAttribute.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="./Dummy.dll" Publicize="true" />
+    </ItemGroup>
+</Project>

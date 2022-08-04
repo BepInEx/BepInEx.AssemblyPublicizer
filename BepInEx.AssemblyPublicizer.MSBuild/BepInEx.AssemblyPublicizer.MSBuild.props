@@ -1,0 +1,40 @@
+<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+    <PropertyGroup>
+        <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</TaskFolder>
+        <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
+        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(MSBuildThisFileName).dll</TaskAssembly>
+    </PropertyGroup>
+
+    <UsingTask TaskName="PublicizeTask" AssemblyFile="$(TaskAssembly)" />
+
+    <Target Name="Publicize" AfterTargets="ResolveReferences">
+        <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" Publicize="@(Publicize)">
+            <Output TaskParameter="RemovedReferences" ItemName="RemovedReferences" />
+            <Output TaskParameter="PublicizedReferences" ItemName="PublicizedReferences" />
+        </PublicizeTask>
+
+        <ItemGroup>
+            <ReferencePath Remove="@(RemovedReferences)" />
+            <ReferencePath Include="@(PublicizedReferences)" />
+
+            <AssemblyAttribute Include="System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute">
+                <_Parameter1>%(PublicizedReferences.Filename)</_Parameter1>
+            </AssemblyAttribute>
+        </ItemGroup>
+
+        <PropertyGroup>
+            <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        </PropertyGroup>
+    </Target>
+
+    <ItemDefinitionGroup>
+        <Publicize Visible="false" />
+    </ItemDefinitionGroup>
+
+    <!-- Hide IgnoresAccessChecksToAttribute.cs (https://github.com/NuGet/Home/issues/4856#issuecomment-287957396) -->
+    <ItemGroup>
+        <Compile Update="@(Compile)">
+            <Visible Condition="'%(NuGetItemType)' == 'Compile'">false</Visible>
+        </Compile>
+    </ItemGroup>
+</Project>
