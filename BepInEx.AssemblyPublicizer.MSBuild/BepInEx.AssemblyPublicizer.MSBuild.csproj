@@ -4,8 +4,6 @@
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
 
-        <Version>1.0.0</Version>
-
         <Description>MSBuild integration for BepInEx.AssemblyPublicizer</Description>
 
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
