@@ -24,9 +24,9 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: nuget packages
-          path: ./**/*.nupkg
+          path: ./BepInEx.AssemblyPublicizer*/bin/Release/*.nupkg
 
       - name: Push NuGet package
         if: github.ref_type == 'tag'
         run: |
-          dotnet nuget push ./**/*.nupkg --source ${{ secrets.NUGET_SOURCE }} --api-key ${{ secrets.NUGET_KEY }}
+          dotnet nuget push ./BepInEx.AssemblyPublicizer*/bin/Release/*.nupkg --source ${{ secrets.NUGET_SOURCE }} --api-key ${{ secrets.NUGET_KEY }}
