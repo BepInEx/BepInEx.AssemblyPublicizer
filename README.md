@@ -11,7 +11,9 @@ AssemblyPublicizer.Publicize("./Test.dll", "./Test-publicized.dll");
 
 ### from console
 `dotnet tool install -g BepInEx.AssemblyPublicizer.Cli`  
-`assembly-publicizer ./Test.dll`
+`assembly-publicizer ./Test.dll` - publicizes  
+`assembly-publicizer ./Test.dll --strip` - publicizes and strips method bodies
+`assembly-publicizer ./Test.dll --strip-only` - strips without publicizing
 
 ### from msbuild
 ```xml

@@ -1,4 +1,5 @@
 using System.CommandLine;
+using System.CommandLine.NamingConventionBinder;
 using System.Diagnostics;
 using Serilog;
 
@@ -11,34 +12,20 @@ public sealed class PublicizeCommand : RootCommand
         Name = "assembly-publicizer";
         Description = "Publicize given assemblies";
 
-        var input = new Argument<FileSystemInfo[]>("input") { Arity = ArgumentArity.OneOrMore }.ExistingOnly();
-        Add(input);
+        Add(new Argument<FileSystemInfo[]>("input") { Arity = ArgumentArity.OneOrMore }.ExistingOnly());
+        Add(new Option<string?>(new[] { "--output", "-o" }).LegalFilePathsOnly());
+        Add(new Option<PublicizeTarget>("--target", () => PublicizeTarget.All, "Targets for publicizing"));
+        Add(new Option<bool>("--publicize-compiler-generated", "Publicize compiler generated types and members"));
+        Add(new Option<bool>("--dont-add-attribute", "Skip injecting OriginalAttributes attribute"));
+        Add(new Option<bool>("--strip", "Strips all method bodies by setting them to `throw null;`"));
+        Add(new Option<bool>("--strip-only", "Strips without publicizing, equivalent to `--target None --strip`"));
+        Add(new Option<bool>(new[] { "--overwrite", "-f" }, "Overwrite existing files instead appending a postfix"));
+        Add(new Option<bool>("--disable-parallel", "Don't publicize in parallel"));
 
-        var output = new Option<string?>("--output").LegalFilePathsOnly();
-        Add(output);
-
-        var target = new Option<PublicizeTarget>("--target", () => PublicizeTarget.All, "Targets for publicizing");
-        Add(target);
-
-        var publicizeCompilerGenerated = new Option<bool>("--publicize-compiler-generated", "Publicize compiler generated types and members");
-        Add(publicizeCompilerGenerated);
-
-        var dontAddAttribute = new Option<bool>("--dont-add-attribute", "Skip injecting OriginalAttributes attribute");
-        Add(dontAddAttribute);
-
-        var strip = new Option<bool>("--strip", "Strips all method bodies by setting them to `throw null;`");
-        Add(strip);
-
-        var overwrite = new Option<bool>("--overwrite", "Overwrite existing files instead appending a postfix");
-        Add(overwrite);
-
-        var disableParallel = new Option<bool>("--disable-parallel", "Don't publicize in parallel");
-        Add(disableParallel);
-
-        this.SetHandler(Handle, input, output, target, publicizeCompilerGenerated, dontAddAttribute, strip, overwrite, disableParallel);
+        Handler = HandlerDescriptor.FromDelegate(Handle).GetCommandHandler();
     }
 
-    private static void Handle(FileSystemInfo[] input, string? output, PublicizeTarget target, bool publicizeCompilerGenerated, bool dontAddAttribute, bool strip, bool overwrite, bool disableParallel)
+    private static void Handle(FileSystemInfo[] input, string? output, PublicizeTarget target, bool publicizeCompilerGenerated, bool dontAddAttribute, bool strip, bool stripOnly, bool overwrite, bool disableParallel)
     {
         var assemblies = new List<FileInfo>();
 
@@ -59,10 +46,10 @@ public sealed class PublicizeCommand : RootCommand
 
         var options = new AssemblyPublicizerOptions
         {
-            Target = target,
+            Target = stripOnly ? PublicizeTarget.None : target,
             PublicizeCompilerGenerated = publicizeCompilerGenerated,
             IncludeOriginalAttributesAttribute = false,
-            Strip = strip,
+            Strip = stripOnly || strip,
         };
 
         var stopwatch = Stopwatch.StartNew();
