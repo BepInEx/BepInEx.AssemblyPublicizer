@@ -5,7 +5,7 @@
         <RepositoryUrl>https://github.com/BepInEx/BepInEx.AssemblyPublicizer</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
 
-        <VersionPrefix>1.0.0</VersionPrefix>
+        <VersionPrefix>0.1.0</VersionPrefix>
         <VersionSuffix>dev</VersionSuffix>
     </PropertyGroup>
 </Project>
