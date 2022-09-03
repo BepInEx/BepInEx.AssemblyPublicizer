@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AsmResolver;
 using AsmResolver.DotNet;
@@ -12,9 +13,12 @@ public static class AssemblyPublicizer
 {
     public static void Publicize(string assemblyPath, string outputPath, AssemblyPublicizerOptions? options = null)
     {
-        var assembly = AssemblyDefinition.FromFile(assemblyPath);
+        var assembly = FatalAsmResolver.FromFile(assemblyPath);
+        var module = assembly.ManifestModule ?? throw new NullReferenceException();
+        module.MetadataResolver = new DefaultMetadataResolver(NoopAssemblyResolver.Instance);
+
         Publicize(assembly, options);
-        assembly.Write(outputPath);
+        module.FatalWrite(outputPath);
     }
 
     public static AssemblyDefinition Publicize(AssemblyDefinition assembly, AssemblyPublicizerOptions? options = null)
