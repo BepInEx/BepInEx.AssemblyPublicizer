@@ -1,24 +1,24 @@
-<Project TreatAsLocalProperty="TaskFolder;TaskAssembly">
+<Project>
     <PropertyGroup>
-        <TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</TaskFolder>
-        <TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</TaskFolder>
-        <TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(TaskFolder)\$(MSBuildThisFileName).dll</TaskAssembly>
+        <_BepInExAssemblyPublicizer_TaskFolder Condition="'$(MSBuildRuntimeType)' == 'Core'">netstandard2.1</_BepInExAssemblyPublicizer_TaskFolder>
+        <_BepInExAssemblyPublicizer_TaskFolder Condition="'$(MSBuildRuntimeType)' != 'Core'">net472</_BepInExAssemblyPublicizer_TaskFolder>
+        <_BepInExAssemblyPublicizer_TaskAssembly>$(MSBuildThisFileDirectory)..\lib\$(_BepInExAssemblyPublicizer_TaskFolder)\$(MSBuildThisFileName).dll</_BepInExAssemblyPublicizer_TaskAssembly>
     </PropertyGroup>
 
-    <UsingTask TaskName="PublicizeTask" AssemblyFile="$(TaskAssembly)" />
+    <UsingTask TaskName="PublicizeTask" AssemblyFile="$(_BepInExAssemblyPublicizer_TaskAssembly)" />
 
     <Target Name="Publicize" AfterTargets="ResolveReferences">
         <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" Publicize="@(Publicize)">
-            <Output TaskParameter="RemovedReferences" ItemName="RemovedReferences" />
-            <Output TaskParameter="PublicizedReferences" ItemName="PublicizedReferences" />
+            <Output TaskParameter="RemovedReferences" ItemName="_RemovedReferences" />
+            <Output TaskParameter="PublicizedReferences" ItemName="_PublicizedReferences" />
         </PublicizeTask>
 
         <ItemGroup>
-            <ReferencePath Remove="@(RemovedReferences)" />
-            <ReferencePath Include="@(PublicizedReferences)" />
+            <ReferencePath Remove="@(_RemovedReferences)" />
+            <ReferencePath Include="@(_PublicizedReferences)" />
 
             <AssemblyAttribute Include="System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute">
-                <_Parameter1>%(PublicizedReferences.Filename)</_Parameter1>
+                <_Parameter1>%(_PublicizedReferences.Filename)</_Parameter1>
             </AssemblyAttribute>
         </ItemGroup>
 

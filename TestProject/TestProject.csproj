@@ -9,7 +9,7 @@
     <Import Project="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.props" />
 
     <PropertyGroup>
-        <TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.AssemblyPublicizer.MSBuild\bin\$(Configuration)\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll</TaskAssembly>
+        <_BepInExAssemblyPublicizer_TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.AssemblyPublicizer.MSBuild\bin\$(Configuration)\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll</_BepInExAssemblyPublicizer_TaskAssembly>
     </PropertyGroup>
 
     <ItemGroup>
