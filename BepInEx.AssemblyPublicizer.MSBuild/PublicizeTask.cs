@@ -65,7 +65,7 @@ public class PublicizeTask : Task
             var originalDocumentationPath = Path.Combine(Path.GetDirectoryName(assemblyPath)!, fileName + ".xml");
             if (File.Exists(originalDocumentationPath))
             {
-                File.Copy(originalDocumentationPath, Path.Combine(outputDirectory, fileName + ".xml"));
+                File.Copy(originalDocumentationPath, Path.Combine(outputDirectory, fileName + ".xml"), true);
             }
 
             File.WriteAllText(hashPath, hash);
