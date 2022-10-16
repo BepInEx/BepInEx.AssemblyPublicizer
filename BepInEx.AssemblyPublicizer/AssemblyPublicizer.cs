@@ -72,19 +72,16 @@ public static class AssemblyPublicizer
         {
             foreach (var methodDefinition in typeDefinition.Methods)
             {
-                if (methodDefinition.IsCompilerControlled)
-                    continue;
+                Publicize(methodDefinition, attribute, options);
+            }
 
-                if (!methodDefinition.IsPublic)
+            // Special case for accessors generated from auto properties, publicize them regardless of PublicizeCompilerGenerated
+            if (!options.PublicizeCompilerGenerated)
+            {
+                foreach (var propertyDefinition in typeDefinition.Properties)
                 {
-                    if (!options.PublicizeCompilerGenerated && methodDefinition.IsCompilerGenerated())
-                        continue;
-
-                    if (attribute != null)
-                        methodDefinition.CustomAttributes.Add(attribute.ToCustomAttribute(methodDefinition.Attributes & MethodAttributes.MemberAccessMask));
-
-                    methodDefinition.Attributes &= ~MethodAttributes.MemberAccessMask;
-                    methodDefinition.Attributes |= MethodAttributes.Public;
+                    if (propertyDefinition.GetMethod is { } getMethod) Publicize(getMethod, attribute, options, true);
+                    if (propertyDefinition.SetMethod is { } setMethod) Publicize(setMethod, attribute, options, true);
                 }
             }
         }
@@ -113,6 +110,24 @@ public static class AssemblyPublicizer
                     fieldDefinition.Attributes |= FieldAttributes.Public;
                 }
             }
+        }
+    }
+
+    private static void Publicize(MethodDefinition methodDefinition, OriginalAttributesAttribute? attribute, AssemblyPublicizerOptions options, bool ignoreCompilerGeneratedCheck = false)
+    {
+        if (methodDefinition.IsCompilerControlled)
+            return;
+
+        if (!methodDefinition.IsPublic)
+        {
+            if (!ignoreCompilerGeneratedCheck && !options.PublicizeCompilerGenerated && methodDefinition.IsCompilerGenerated())
+                return;
+
+            if (attribute != null)
+                methodDefinition.CustomAttributes.Add(attribute.ToCustomAttribute(methodDefinition.Attributes & MethodAttributes.MemberAccessMask));
+
+            methodDefinition.Attributes &= ~MethodAttributes.MemberAccessMask;
+            methodDefinition.Attributes |= MethodAttributes.Public;
         }
     }
 }
