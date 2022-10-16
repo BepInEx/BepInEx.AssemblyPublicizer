@@ -52,6 +52,7 @@ public class PublicizeTask : Task
 
             var publicizedReference = new TaskItem(publicizedAssemblyPath);
             taskItem.CopyMetadataTo(publicizedReference);
+            publicizedReference.RemoveMetadata("ReferenceAssembly");
             publicizedReferences.Add(publicizedReference);
 
             if (File.Exists(hashPath) && File.ReadAllText(hashPath) == hash)
