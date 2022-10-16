@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Build.Framework;
@@ -82,8 +82,19 @@ public class PublicizeTask : Task
 
     private static string ComputeHash(byte[] bytes)
     {
+        static void HashString(ICryptoTransform hash, string str)
+        {
+            var buffer = Encoding.UTF8.GetBytes(str);
+            hash.TransformBlock(buffer, 0, buffer.Length, buffer, 0);
+        }
+
         using var md5 = MD5.Create();
-        return ByteArrayToString(md5.ComputeHash(bytes));
+
+        HashString(md5, typeof(AssemblyPublicizer).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+        HashString(md5, typeof(PublicizeTask).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
+        md5.TransformFinalBlock(bytes, 0, bytes.Length);
+
+        return ByteArrayToString(md5.Hash);
     }
 
     private static string ByteArrayToString(IReadOnlyCollection<byte> data)
