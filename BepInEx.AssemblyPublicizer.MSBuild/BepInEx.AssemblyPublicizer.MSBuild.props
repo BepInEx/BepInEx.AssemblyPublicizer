@@ -28,7 +28,12 @@
     </Target>
 
     <ItemDefinitionGroup>
-        <Publicize Visible="false" />
+        <Publicize Visible="false">
+            <PublicizeTarget />
+            <PublicizeCompilerGenerated />
+            <IncludeOriginalAttributesAttribute />
+            <Strip />
+        </Publicize>
     </ItemDefinitionGroup>
 
     <!-- Hide IgnoresAccessChecksToAttribute.cs (https://github.com/NuGet/Home/issues/4856#issuecomment-287957396) -->
