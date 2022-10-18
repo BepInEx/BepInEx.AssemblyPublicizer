@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Reference Include="./Dummy.dll" Publicize="true" />
+        <ProjectReference Include="..\TestLibrary\TestLibrary.csproj" ReferenceOutputAssembly="false" />
+        <Reference Include="..\TestLibrary\bin\$(Configuration)\netstandard2.0\TestLibrary.dll" Publicize="true" />
     </ItemGroup>
 </Project>

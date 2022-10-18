@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BepInEx.AssemblyPublicizer.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{12ACB697-3891-4CB8-A531-058434CF01ED}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLibrary", "TestLibrary\TestLibrary.csproj", "{F2EC6047-4B6A-48B4-BFFD-230972DA7F8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{12ACB697-3891-4CB8-A531-058434CF01ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12ACB697-3891-4CB8-A531-058434CF01ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12ACB697-3891-4CB8-A531-058434CF01ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2EC6047-4B6A-48B4-BFFD-230972DA7F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2EC6047-4B6A-48B4-BFFD-230972DA7F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2EC6047-4B6A-48B4-BFFD-230972DA7F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2EC6047-4B6A-48B4-BFFD-230972DA7F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
