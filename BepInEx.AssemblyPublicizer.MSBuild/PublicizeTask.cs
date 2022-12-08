@@ -43,7 +43,7 @@ public class PublicizeTask : Task
 
             ITaskItem optionsHolder;
 
-            if (taskItem.GetMetadata("Publicize") == "true")
+            if (string.Equals(taskItem.GetMetadata("Publicize"), "true", StringComparison.OrdinalIgnoreCase))
             {
                 optionsHolder = taskItem;
             }
