@@ -6,19 +6,19 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <Import Project="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.props" />
+    <Import Project="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.props"/>
 
     <PropertyGroup>
         <_BepInExAssemblyPublicizer_TaskAssembly>$(MSBuildThisFileDirectory)\..\BepInEx.AssemblyPublicizer.MSBuild\bin\$(Configuration)\netstandard2.1\BepInEx.AssemblyPublicizer.MSBuild.dll</_BepInExAssemblyPublicizer_TaskAssembly>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.csproj" ReferenceOutputAssembly="false" />
-        <Compile Include="..\BepInEx.AssemblyPublicizer.MSBuild\IgnoresAccessChecksToAttribute.cs" />
+        <ProjectReference Include="..\BepInEx.AssemblyPublicizer.MSBuild\BepInEx.AssemblyPublicizer.MSBuild.csproj" ReferenceOutputAssembly="false"/>
+        <Compile Include="..\BepInEx.AssemblyPublicizer.MSBuild\IgnoresAccessChecksToAttribute.cs"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\TestLibrary\TestLibrary.csproj" ReferenceOutputAssembly="false" />
-        <Reference Include="..\TestLibrary\bin\$(Configuration)\netstandard2.0\TestLibrary.dll" Publicize="true" />
+        <ProjectReference Include="..\TestLibrary\TestLibrary.csproj" ReferenceOutputAssembly="false"/>
+        <Reference Include="..\TestLibrary\bin\$(Configuration)\netstandard2.0\TestLibrary.dll" Publicize="true"/>
     </ItemGroup>
 </Project>

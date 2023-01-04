@@ -13,13 +13,13 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Serilog" Version="2.11.0" />
-        <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
-        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
-        <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
+        <PackageReference Include="Serilog" Version="2.12.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="4.1.0"/>
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1"/>
+        <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\BepInEx.AssemblyPublicizer\BepInEx.AssemblyPublicizer.csproj" />
+        <ProjectReference Include="..\BepInEx.AssemblyPublicizer\BepInEx.AssemblyPublicizer.csproj"/>
     </ItemGroup>
 </Project>

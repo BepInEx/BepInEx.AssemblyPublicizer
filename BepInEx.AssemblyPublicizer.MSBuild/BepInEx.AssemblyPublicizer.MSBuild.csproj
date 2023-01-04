@@ -14,15 +14,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.*" />
-        <ProjectReference Include="..\BepInEx.AssemblyPublicizer\BepInEx.AssemblyPublicizer.csproj" />
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.*"/>
+        <ProjectReference Include="..\BepInEx.AssemblyPublicizer\BepInEx.AssemblyPublicizer.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build" />
+        <Content Include="$(MSBuildProjectName).props" Pack="true" PackagePath="build"/>
 
-        <Compile Remove="IgnoresAccessChecksToAttribute.cs" />
-        <Content Include="IgnoresAccessChecksToAttribute.cs" Pack="true" PackagePath="contentFiles/cs/any" BuildAction="Compile" />
+        <Compile Remove="IgnoresAccessChecksToAttribute.cs"/>
+        <Content Include="IgnoresAccessChecksToAttribute.cs" Pack="true" PackagePath="contentFiles/cs/any" BuildAction="Compile"/>
     </ItemGroup>
 
     <Target Name="PackTaskDependencies" BeforeTargets="GenerateNuspec">
