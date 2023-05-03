@@ -19,6 +19,9 @@ public class PublicizeTask : Task
     public ITaskItem[] ReferencePath { get; set; }
 
     [Required]
+    public ITaskItem[] PackageReference { get; set; }
+
+    [Required]
     public ITaskItem[] Publicize { get; set; }
 
     [Output]
@@ -32,6 +35,7 @@ public class PublicizeTask : Task
         var outputDirectory = Path.Combine(IntermediateOutputPath, "publicized");
         Directory.CreateDirectory(outputDirectory);
 
+        var packagesToPublicize = PackageReference.Where(x => x.GetBoolMetadata("Publicize")).ToDictionary(x => x.ItemSpec);
         var assemblyNamesToPublicize = Publicize.ToDictionary(x => x.ItemSpec);
 
         var removedReferences = new List<ITaskItem>();
@@ -43,11 +47,14 @@ public class PublicizeTask : Task
 
             ITaskItem optionsHolder;
 
-            if (string.Equals(taskItem.GetMetadata("Publicize"), "true", StringComparison.OrdinalIgnoreCase))
+            if (taskItem.GetBoolMetadata("Publicize"))
             {
                 optionsHolder = taskItem;
             }
             else if (assemblyNamesToPublicize.TryGetValue(fileName, out optionsHolder))
+            {
+            }
+            else if (taskItem.TryGetMetadata("NuGetPackageId", out var nuGetPackageId) && packagesToPublicize.TryGetValue(nuGetPackageId, out optionsHolder))
             {
             }
             else

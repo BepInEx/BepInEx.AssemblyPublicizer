@@ -16,6 +16,8 @@
     <ItemGroup>
         <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.*"/>
         <ProjectReference Include="..\BepInEx.AssemblyPublicizer\BepInEx.AssemblyPublicizer.csproj"/>
+
+        <PackageReference Include="PolySharp" Version="1.13.1" PrivateAssets="all"/>
     </ItemGroup>
 
     <ItemGroup>

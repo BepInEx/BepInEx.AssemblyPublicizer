@@ -8,7 +8,7 @@
     <UsingTask TaskName="PublicizeTask" AssemblyFile="$(_BepInExAssemblyPublicizer_TaskAssembly)" />
 
     <Target Name="Publicize" AfterTargets="ResolveReferences" BeforeTargets="FindReferenceAssembliesForReferences">
-        <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" Publicize="@(Publicize)">
+        <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" PackageReference="@(PackageReference)" Publicize="@(Publicize)">
             <Output TaskParameter="RemovedReferences" ItemName="_RemovedReferences" />
             <Output TaskParameter="PublicizedReferences" ItemName="_PublicizedReferences" />
         </PublicizeTask>
@@ -39,7 +39,7 @@
     <!-- Hide IgnoresAccessChecksToAttribute.cs (https://github.com/NuGet/Home/issues/4856#issuecomment-287957396) -->
     <ItemGroup>
         <Compile Update="@(Compile)">
-            <Visible Condition="'%(NuGetItemType)' == 'Compile'">false</Visible>
+            <Visible Condition="'%(NuGetPackageId)' == 'BepInEx.AssemblyPublicizer.MSBuild' and '%(NuGetItemType)' == 'Compile'">false</Visible>
         </Compile>
     </ItemGroup>
 </Project>
