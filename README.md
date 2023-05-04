@@ -22,7 +22,7 @@ AssemblyPublicizer.Publicize("./Test.dll", "./Test-publicized.dll");
 ### from msbuild
 ```xml
 <ItemGroup>
-    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" />
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.1" PrivateAssets="all" />
 
     <!-- Publicize directly when referencing -->
     <Reference Include=".../TestProject.dll" Publicize="true" />
