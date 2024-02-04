@@ -59,7 +59,7 @@ public static class AssemblyPublicizer
         if (!options.PublicizeCompilerGenerated && typeDefinition.IsCompilerGenerated())
             return;
 
-        if (options.HasTarget(PublicizeTarget.Types) && (!typeDefinition.IsNested && !typeDefinition.IsPublic || typeDefinition.IsNested && !typeDefinition.IsNestedPublic))
+        if (options.HasTarget(PublicizeTarget.Types) && (!typeDefinition.IsNested && !typeDefinition.IsPublic || typeDefinition.IsNested && !typeDefinition.IsNestedPublic || typeDefinition.IsSealed))
         {
             if (attribute != null)
                 typeDefinition.CustomAttributes.Add(attribute.ToCustomAttribute(typeDefinition.Attributes & TypeAttributes.VisibilityMask));
