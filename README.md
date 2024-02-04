@@ -4,7 +4,7 @@
 [![NuGet](https://img.shields.io/nuget/v/BepInEx.AssemblyPublicizer.MSBuild?label=BepInEx.AssemblyPublicizer.MSBuild&logo=NuGet)](https://www.nuget.org/packages/BepInEx.AssemblyPublicizer.MSBuild)
 [![NuGet](https://img.shields.io/nuget/v/BepInEx.AssemblyPublicizer.Cli?label=BepInEx.AssemblyPublicizer.Cli&logo=NuGet)](https://www.nuget.org/packages/BepInEx.AssemblyPublicizer.Cli)
 
-Yet another assembly publicizer/stripper
+Yet another assembly publicizer/stripper/unsealer
 
 ## Using
 
