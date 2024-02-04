@@ -65,6 +65,7 @@ public static class AssemblyPublicizer
                 typeDefinition.CustomAttributes.Add(attribute.ToCustomAttribute(typeDefinition.Attributes & TypeAttributes.VisibilityMask));
 
             typeDefinition.Attributes &= ~TypeAttributes.VisibilityMask;
+            typeDefinition.Attributes &= ~TypeAttributes.Sealed;
             typeDefinition.Attributes |= typeDefinition.IsNested ? TypeAttributes.NestedPublic : TypeAttributes.Public;
         }
 
