@@ -23,7 +23,7 @@ internal static class FatalAsmResolver
     {
         public static FatalThrowErrorListener Instance { get; } = new();
 
-        private IList<Exception> Exceptions { get; } = new List<Exception>();
+        public IList<Exception> Exceptions { get; } = new List<Exception>();
 
         /// <inheritdoc />
         public void MarkAsFatal()
@@ -41,7 +41,8 @@ internal static class FatalAsmResolver
         var result = new ManagedPEImageBuilder().CreateImage(module);
         if (result.HasFailed)
         {
-            throw new AggregateException("Construction of the PE image failed with one or more errors.", result.DiagnosticBag.Exceptions);
+            var errorListener = (FatalThrowErrorListener) result.ErrorListener;
+            throw new AggregateException("Construction of the PE image failed with one or more errors.", errorListener.Exceptions);
         }
 
         using var fileStream = File.Create(filePath);
