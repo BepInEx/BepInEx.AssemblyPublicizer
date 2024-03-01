@@ -17,7 +17,7 @@
             <ReferencePath Remove="@(_RemovedReferences)" />
             <ReferencePath Include="@(_PublicizedReferences)" />
 
-            <AssemblyAttribute Include="System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute">
+            <AssemblyAttribute Include="System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute" Condition="'@(_PublicizedReferences)' != ''">
                 <_Parameter1>%(_PublicizedReferences.Filename)</_Parameter1>
             </AssemblyAttribute>
         </ItemGroup>
