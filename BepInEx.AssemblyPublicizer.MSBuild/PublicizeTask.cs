@@ -64,7 +64,7 @@ public class PublicizeTask : Task
 
             var options = new AssemblyPublicizerOptions();
 
-            if (optionsHolder.GetMetadata("PublicizeTarget") is { } rawTarget && !string.IsNullOrEmpty(rawTarget))
+            if (optionsHolder.TryGetMetadata("PublicizeTarget", out var rawTarget))
             {
                 if (Enum.TryParse<PublicizeTarget>(rawTarget, true, out var parsedTarget))
                 {
@@ -76,17 +76,17 @@ public class PublicizeTask : Task
                 }
             }
 
-            if (optionsHolder.GetMetadata("PublicizeCompilerGenerated") is { } rawPublicizeCompilerGenerated && !string.IsNullOrEmpty(rawPublicizeCompilerGenerated))
+            if (optionsHolder.TryGetMetadata("PublicizeCompilerGenerated", out var rawPublicizeCompilerGenerated))
             {
                 options.PublicizeCompilerGenerated = bool.Parse(rawPublicizeCompilerGenerated);
             }
 
-            if (optionsHolder.GetMetadata("IncludeOriginalAttributesAttribute") is { } rawIncludeOriginalAttributesAttribute && !string.IsNullOrEmpty(rawIncludeOriginalAttributesAttribute))
+            if (optionsHolder.TryGetMetadata("IncludeOriginalAttributesAttribute", out var rawIncludeOriginalAttributesAttribute))
             {
                 options.IncludeOriginalAttributesAttribute = bool.Parse(rawIncludeOriginalAttributesAttribute);
             }
 
-            if (optionsHolder.GetMetadata("Strip") is { } rawStrip && !string.IsNullOrEmpty(rawStrip))
+            if (optionsHolder.TryGetMetadata("Strip", out var rawStrip))
             {
                 options.Strip = bool.Parse(rawStrip);
             }
