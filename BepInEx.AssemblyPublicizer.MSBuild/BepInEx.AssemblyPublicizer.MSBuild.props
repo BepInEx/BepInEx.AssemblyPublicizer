@@ -9,8 +9,12 @@
 
     <Target Name="Publicize" AfterTargets="ResolveReferences" BeforeTargets="FindReferenceAssembliesForReferences">
         <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Text="BepInEx.AssemblyPublicizer.MSBuild only works in SDK-style projects" />
+        
+        <PropertyGroup>
+            <GeneratedIgnoresAccessChecksToFile Condition="'$(GeneratedIgnoresAccessChecksToFile)' == ''">$(IntermediateOutputPath)$(MSBuildProjectName).IgnoresAccessChecksTo.cs</GeneratedIgnoresAccessChecksToFile>
+        </PropertyGroup>
 
-        <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" PackageReference="@(PackageReference)" Publicize="@(Publicize)">
+        <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" GeneratedIgnoresAccessChecksToFile="$(GeneratedIgnoresAccessChecksToFile)" ReferencePath="@(ReferencePath)" PackageReference="@(PackageReference)" Publicize="@(Publicize)">
             <Output TaskParameter="RemovedReferences" ItemName="_RemovedReferences" />
             <Output TaskParameter="PublicizedReferences" ItemName="_PublicizedReferences" />
         </PublicizeTask>
@@ -19,9 +23,8 @@
             <ReferencePath Remove="@(_RemovedReferences)" />
             <ReferencePath Include="@(_PublicizedReferences)" />
 
-            <AssemblyAttribute Include="System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute" Condition="'@(_PublicizedReferences)' != ''">
-                <_Parameter1>%(_PublicizedReferences.Filename)</_Parameter1>
-            </AssemblyAttribute>
+            <Compile Include="$(GeneratedIgnoresAccessChecksToFile)" />
+            <FileWrites Include="$(GeneratedIgnoresAccessChecksToFile)" />
         </ItemGroup>
 
         <PropertyGroup>
