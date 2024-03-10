@@ -8,6 +8,8 @@
     <UsingTask TaskName="PublicizeTask" AssemblyFile="$(_BepInExAssemblyPublicizer_TaskAssembly)" />
 
     <Target Name="Publicize" AfterTargets="ResolveReferences" BeforeTargets="FindReferenceAssembliesForReferences">
+        <Error Condition="'$(UsingMicrosoftNETSdk)' != 'true'" Text="BepInEx.AssemblyPublicizer.MSBuild only works in SDK-style projects" />
+
         <PublicizeTask IntermediateOutputPath="$(IntermediateOutputPath)" ReferencePath="@(ReferencePath)" PackageReference="@(PackageReference)" Publicize="@(Publicize)">
             <Output TaskParameter="RemovedReferences" ItemName="_RemovedReferences" />
             <Output TaskParameter="PublicizedReferences" ItemName="_PublicizedReferences" />
