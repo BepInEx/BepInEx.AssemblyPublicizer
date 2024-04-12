@@ -72,7 +72,8 @@ public static class AssemblyPublicizer
         {
             foreach (var methodDefinition in typeDefinition.Methods)
             {
-                Publicize(methodDefinition, attribute, options);
+                if (!methodDefinition.IsVirtual || methodDefinition is { IsVirtual: true, IsReuseSlot: true })
+                    Publicize(methodDefinition, attribute, options);
             }
 
             // Special case for accessors generated from auto properties, publicize them regardless of PublicizeCompilerGenerated
@@ -80,8 +81,12 @@ public static class AssemblyPublicizer
             {
                 foreach (var propertyDefinition in typeDefinition.Properties)
                 {
-                    if (propertyDefinition.GetMethod is { } getMethod) Publicize(getMethod, attribute, options, true);
-                    if (propertyDefinition.SetMethod is { } setMethod) Publicize(setMethod, attribute, options, true);
+                    if (propertyDefinition.GetMethod is { } getMethod &&
+                        (!getMethod.IsVirtual || getMethod is { IsVirtual: true, IsReuseSlot: true }))
+                        Publicize(getMethod, attribute, options, true);
+                    if (propertyDefinition.SetMethod is { } setMethod &&
+                        (!setMethod.IsVirtual || setMethod is { IsVirtual: true, IsReuseSlot: true }))
+                        Publicize(setMethod, attribute, options, true);
                 }
             }
         }
