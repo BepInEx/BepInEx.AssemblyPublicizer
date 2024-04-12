@@ -71,8 +71,8 @@ public static class AssemblyPublicizer
         if (options.HasTarget(PublicizeTarget.Methods))
         {
             foreach (var methodDefinition in typeDefinition.Methods)
-            {
-                if (!methodDefinition.IsVirtual || methodDefinition is { IsVirtual: true, IsReuseSlot: true })
+            {                    
+                if (!methodDefinition.IsVirtual || !methodDefinition.IsFinal)
                     Publicize(methodDefinition, attribute, options);
             }
 
@@ -82,10 +82,10 @@ public static class AssemblyPublicizer
                 foreach (var propertyDefinition in typeDefinition.Properties)
                 {
                     if (propertyDefinition.GetMethod is { } getMethod &&
-                        (!getMethod.IsVirtual || getMethod is { IsVirtual: true, IsReuseSlot: true }))
+                        (!getMethod.IsVirtual || !getMethod.IsFinal))
                         Publicize(getMethod, attribute, options, true);
                     if (propertyDefinition.SetMethod is { } setMethod &&
-                        (!setMethod.IsVirtual || setMethod is { IsVirtual: true, IsReuseSlot: true }))
+                        (!setMethod.IsVirtual || !setMethod.IsFinal))
                         Publicize(setMethod, attribute, options, true);
                 }
             }
