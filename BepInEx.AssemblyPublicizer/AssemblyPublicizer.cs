@@ -118,6 +118,18 @@ public static class AssemblyPublicizer
         if (methodDefinition.IsCompilerControlled)
             return;
 
+        // Ignore explicit interface implementations because you can't call them directly anyway and it confuses IDEs
+        if (methodDefinition is { IsVirtual: true, IsFinal: true, DeclaringType: not null })
+        {
+            foreach (var implementation in methodDefinition.DeclaringType.MethodImplementations)
+            {
+                if (implementation.Body == methodDefinition)
+                {
+                    return;
+                }
+            }
+        }
+
         if (!methodDefinition.IsPublic)
         {
             if (!ignoreCompilerGeneratedCheck && !options.PublicizeCompilerGenerated && methodDefinition.IsCompilerGenerated())
