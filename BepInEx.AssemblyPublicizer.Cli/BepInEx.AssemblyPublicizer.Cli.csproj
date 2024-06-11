@@ -10,6 +10,8 @@
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>assembly-publicizer</ToolCommandName>
+        <PackageId>Danku.BepInEx.AssemblyPublicizer.Cli</PackageId>
+        <Version>0.4.3-virtual</Version>
     </PropertyGroup>
 
     <ItemGroup>

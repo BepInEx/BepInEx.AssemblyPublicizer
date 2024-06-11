@@ -33,7 +33,6 @@ public static class AssemblyPublicizer
         {
             if (attribute != null && typeDefinition == attribute.Type)
                 continue;
-
             Publicize(typeDefinition, attribute, options);
         }
 
@@ -42,6 +41,7 @@ public static class AssemblyPublicizer
 
     private static void Publicize(TypeDefinition typeDefinition, OriginalAttributesAttribute? attribute, AssemblyPublicizerOptions options)
     {
+        
         if (options.Strip && !typeDefinition.IsEnum && !typeDefinition.IsInterface)
         {
             foreach (var methodDefinition in typeDefinition.Methods)
@@ -113,21 +113,21 @@ public static class AssemblyPublicizer
         }
     }
 
-    private static void Publicize(MethodDefinition methodDefinition, OriginalAttributesAttribute? attribute, AssemblyPublicizerOptions options, bool ignoreCompilerGeneratedCheck = false)
+    private static void Publicize(MethodDefinition methodDefinition, OriginalAttributesAttribute? attribute,
+        AssemblyPublicizerOptions options, bool ignoreCompilerGeneratedCheck = true)
     {
-        if (methodDefinition.IsCompilerControlled)
+        
+        if (methodDefinition.IsCompilerControlled && !ignoreCompilerGeneratedCheck &&
+            !options.PublicizeCompilerGenerated && methodDefinition.IsCompilerGenerated())
             return;
-
-        if (!methodDefinition.IsPublic)
-        {
-            if (!ignoreCompilerGeneratedCheck && !options.PublicizeCompilerGenerated && methodDefinition.IsCompilerGenerated())
-                return;
-
-            if (attribute != null)
-                methodDefinition.CustomAttributes.Add(attribute.ToCustomAttribute(methodDefinition.Attributes & MethodAttributes.MemberAccessMask));
-
-            methodDefinition.Attributes &= ~MethodAttributes.MemberAccessMask;
-            methodDefinition.Attributes |= MethodAttributes.Public;
-        }
+        
+        if (attribute != null)
+            methodDefinition.CustomAttributes.Add(
+                attribute.ToCustomAttribute(methodDefinition.Attributes & MethodAttributes.MemberAccessMask));
+        
+        methodDefinition.IsFinal = false;
+        
+        methodDefinition.Attributes &= ~MethodAttributes.MemberAccessMask;
+        methodDefinition.Attributes |= MethodAttributes.Public | MethodAttributes.Virtual;
     }
 }

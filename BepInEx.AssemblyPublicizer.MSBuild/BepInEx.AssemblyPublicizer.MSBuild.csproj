@@ -11,6 +11,10 @@
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
         <NoPackageAnalysis>true</NoPackageAnalysis>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <PackageId>Danku.BepInEx.AssemblyPublicizer.MSBuild</PackageId>
+        <Version>0.4.3-virtual</Version>
+        <Authors>BepInEx, Danku</Authors>
+        <RepositoryUrl>https://github.com/DankuwOs/BepInEx.AssemblyPublicizer</RepositoryUrl>
     </PropertyGroup>
 
     <ItemGroup>

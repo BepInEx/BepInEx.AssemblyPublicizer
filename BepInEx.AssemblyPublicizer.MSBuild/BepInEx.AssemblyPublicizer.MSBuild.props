@@ -44,7 +44,7 @@
     <!-- Hide IgnoresAccessChecksToAttribute.cs (https://github.com/NuGet/Home/issues/4856#issuecomment-287957396) -->
     <ItemGroup>
         <Compile Update="@(Compile)">
-            <Visible Condition="'%(NuGetPackageId)' == 'BepInEx.AssemblyPublicizer.MSBuild' and '%(NuGetItemType)' == 'Compile'">false</Visible>
+            <Visible Condition="'%(NuGetPackageId)' == 'Danku.AssemblyPublicizer.MSBuild' and '%(NuGetItemType)' == 'Compile'">false</Visible>
         </Compile>
     </ItemGroup>
 </Project>
