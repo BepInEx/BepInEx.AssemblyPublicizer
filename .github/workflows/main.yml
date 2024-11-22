@@ -20,6 +20,7 @@ jobs:
         uses: cake-build/cake-action@v1
         with:
           verbosity: Diagnostic
+          cake-version: 4.2.0
 
       - uses: actions/upload-artifact@v3
         with:
