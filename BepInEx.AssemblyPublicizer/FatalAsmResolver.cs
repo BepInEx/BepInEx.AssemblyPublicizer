@@ -7,7 +7,7 @@ using AsmResolver.DotNet.Builder;
 using AsmResolver.DotNet.Serialized;
 using AsmResolver.IO;
 using AsmResolver.PE;
-using AsmResolver.PE.DotNet.Builder;
+using AsmResolver.PE.Builder;
 
 namespace BepInEx.AssemblyPublicizer;
 
