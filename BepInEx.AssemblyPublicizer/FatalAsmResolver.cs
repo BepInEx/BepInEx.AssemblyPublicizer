@@ -11,7 +11,7 @@ using AsmResolver.PE.Builder;
 
 namespace BepInEx.AssemblyPublicizer;
 
-internal static class FatalAsmResolver
+public static class FatalAsmResolver
 {
     /// Same as <see cref="AssemblyDefinition.FromFile(string)"/> but throws only on fatal errors
     public static AssemblyDefinition FromFile(string filePath)
