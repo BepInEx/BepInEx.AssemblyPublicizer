@@ -80,8 +80,14 @@ public static class AssemblyPublicizer
             {
                 foreach (var propertyDefinition in typeDefinition.Properties)
                 {
-                    if (propertyDefinition.GetMethod is { } getMethod && !getMethod.IsVirtual) Publicize(getMethod, attribute, options, true);
-                    if (propertyDefinition.SetMethod is { } setMethod && !setMethod.IsVirtual) Publicize(setMethod, attribute, options, true);
+                    var isPropGenerated = propertyDefinition.IsCompilerGenerated();
+
+                    if (propertyDefinition.GetMethod is { } getMethod
+                        && !isPropGenerated && !getMethod.IsCompilerGenerated()
+                        && !getMethod.IsVirtual) Publicize(getMethod, attribute, options, true);
+                    if (propertyDefinition.SetMethod is { } setMethod
+                        && !isPropGenerated && !setMethod.IsCompilerGenerated()
+                        && !setMethod.IsVirtual) Publicize(setMethod, attribute, options, true);
                 }
             }
         }
