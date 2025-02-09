@@ -144,7 +144,7 @@ public class PublicizeTask : Task
 
         foreach (var publicizedReference in publicizedReferences)
         {
-            var assemblyName = Path.GetFileNameWithoutExtension(publicizedReference.ItemSpec);
+            var assemblyName = AssemblyName.GetAssemblyName(publicizedReference.GetMetadata("FullPath")).Name;
             stringBuilder.AppendLine($"[assembly: System.Runtime.CompilerServices.IgnoresAccessChecksToAttribute(\"{assemblyName}\")]");
         }
 
