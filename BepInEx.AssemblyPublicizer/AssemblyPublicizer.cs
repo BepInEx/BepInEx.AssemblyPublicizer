@@ -80,6 +80,8 @@ public static class AssemblyPublicizer
             {
                 foreach (var propertyDefinition in typeDefinition.Properties)
                 {
+                    if (propertyDefinition.IsCompilerGenerated()) continue;
+
                     if (propertyDefinition.GetMethod is { } getMethod) Publicize(getMethod, attribute, options, true);
                     if (propertyDefinition.SetMethod is { } setMethod) Publicize(setMethod, attribute, options, true);
                 }
