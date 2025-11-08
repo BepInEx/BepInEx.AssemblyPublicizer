@@ -44,7 +44,7 @@ internal class OriginalAttributesAttribute
             );
             Type.Methods.Add(constructorDefinition);
 
-            var body = constructorDefinition.CilMethodBody = new CilMethodBody(constructorDefinition);
+            var body = constructorDefinition.CilMethodBody = new CilMethodBody();
             body.Instructions.Add(CilOpCodes.Ldarg_0);
             body.Instructions.Add(CilOpCodes.Call, baseConstructorReference);
             body.Instructions.Add(CilOpCodes.Ret);

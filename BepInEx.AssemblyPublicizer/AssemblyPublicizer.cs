@@ -49,7 +49,7 @@ public static class AssemblyPublicizer
                 if (!methodDefinition.HasMethodBody)
                     continue;
 
-                var newBody = methodDefinition.CilMethodBody = new CilMethodBody(methodDefinition);
+                var newBody = methodDefinition.CilMethodBody = new CilMethodBody();
                 newBody.Instructions.Add(CilOpCodes.Ldnull);
                 newBody.Instructions.Add(CilOpCodes.Throw);
                 methodDefinition.NoInlining = true;
