@@ -48,7 +48,7 @@ public sealed class PublicizeCommand : RootCommand
         {
             Target = stripOnly ? PublicizeTarget.None : target,
             PublicizeCompilerGenerated = publicizeCompilerGenerated,
-            IncludeOriginalAttributesAttribute = false,
+            IncludeOriginalAttributesAttribute = !dontAddAttribute,
             Strip = stripOnly || strip,
         };
 
