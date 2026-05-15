@@ -17,9 +17,15 @@ internal static class Extensions
 
     public static bool TryGetMetadata(this ITaskItem taskItem, string metadataName, [NotNullWhen(true)] out string? metadata)
     {
-        if (taskItem.HasMetadata(metadataName))
+        if (!taskItem.HasMetadata(metadataName))
         {
-            metadata = taskItem.GetMetadata(metadataName);
+            metadata = null;
+            return false;
+        }
+
+        metadata = taskItem.GetMetadata(metadataName);
+        if (!string.IsNullOrWhiteSpace(metadata))
+        {
             return true;
         }
 
