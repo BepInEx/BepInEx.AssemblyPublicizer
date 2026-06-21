@@ -14,9 +14,13 @@ namespace BepInEx.AssemblyPublicizer;
 internal static class FatalAsmResolver
 {
     /// Same as <see cref="AssemblyDefinition.FromFile(string)"/> but throws only on fatal errors
-    public static AssemblyDefinition FromFile(string filePath)
+    public static AssemblyDefinition FromFile(string filePath, bool createRuntimeContext)
     {
-        return AssemblyDefinition.FromImage(PEImage.FromFile(filePath), new ModuleReaderParameters(FatalThrowErrorListener.Instance));
+        return AssemblyDefinition.FromImage(
+            PEImage.FromFile(filePath),
+            new ModuleReaderParameters(FatalThrowErrorListener.Instance),
+            createRuntimeContext
+        );
     }
 
     private sealed class FatalThrowErrorListener : IErrorListener
