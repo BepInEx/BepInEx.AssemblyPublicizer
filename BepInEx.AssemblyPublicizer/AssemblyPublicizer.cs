@@ -13,9 +13,14 @@ public static class AssemblyPublicizer
 {
     public static void Publicize(string assemblyPath, string outputPath, AssemblyPublicizerOptions? options = null)
     {
-        var assembly = FatalAsmResolver.FromFile(assemblyPath);
+        var assembly = FatalAsmResolver.FromFile(assemblyPath, createRuntimeContext: false);
         var module = assembly.ManifestModule ?? throw new NullReferenceException();
-        module.MetadataResolver = new DefaultMetadataResolver(NoopAssemblyResolver.Instance);
+
+        var context = new RuntimeContext(
+            module.OriginalTargetRuntime,
+            assemblyResolver: NullAssemblyResolver.Instance
+        );
+        context.AddAssembly(assembly);
 
         Publicize(assembly, options);
         module.FatalWrite(outputPath);

@@ -24,8 +24,8 @@ internal class OriginalAttributesAttribute
     public OriginalAttributesAttribute(ModuleDefinition module)
     {
         var corLibScope = module.CorLibTypeFactory.CorLibScope;
-        var attributeReference = corLibScope.CreateTypeReference("System", "Attribute").ImportWith(module.DefaultImporter);
-        var baseConstructorReference = attributeReference.CreateMemberReference(".ctor", MethodSignature.CreateInstance(module.CorLibTypeFactory.Void)).ImportWith(module.DefaultImporter);
+        var attributeReference = corLibScope.CreateTypeReference("System", "Attribute");
+        var baseConstructorReference = attributeReference.CreateMemberReference(".ctor", MethodSignature.CreateInstance(module.CorLibTypeFactory.Void));
 
         Type = new TypeDefinition(
             "BepInEx.AssemblyPublicizer", "OriginalAttributesAttribute",
@@ -36,11 +36,11 @@ internal class OriginalAttributesAttribute
 
         foreach (var pair in _typeNames)
         {
-            var attributesType = _attributesTypes[pair.Key] = corLibScope.CreateTypeReference("System.Reflection", pair.Value).ImportWith(module.DefaultImporter).ToTypeSignature();
+            var attributesType = _attributesTypes[pair.Key] = corLibScope.CreateTypeReference("System.Reflection", pair.Value).ToTypeSignature(isValueType: true);
 
             var constructorDefinition = new MethodDefinition(".ctor",
                 MethodAttributes.HideBySig | MethodAttributes.SpecialName | MethodAttributes.RuntimeSpecialName | MethodAttributes.Public,
-                MethodSignature.CreateInstance(module.CorLibTypeFactory.Void, attributesType)
+                MethodSignature.CreateInstance(module.CorLibTypeFactory.Void, [attributesType])
             );
             Type.Methods.Add(constructorDefinition);
 
